@@ -13,7 +13,8 @@ function callBook (req, res){
   
   var jsonText = req.body;
   console.log(jsonText)
-  axios.post('http://localhost:7071/api/HttpTrigger2', jsonText)
+  //axios.post('http://localhost:7071/api/HttpTrigger2', jsonText)
+  axios.post('https://af29.azurewebsites.net/api/HttpTrigger2', jsonText)
   .then(async response => {
       try {
           // const jsonObject = JSON.parse(response.data.table);
