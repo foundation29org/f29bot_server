@@ -6,6 +6,7 @@ const express = require('express')
 const langCtrl = require('../controllers/all/lang')
 
 const openAIserviceCtrl = require('../services/openai')
+const bookCtrl = require('../services/book')
 
 const api = express.Router()
 
@@ -14,6 +15,7 @@ api.get('/langs/',  langCtrl.getLangs)
 
 //services OPENAI
 api.post('/callopenai', openAIserviceCtrl.callOpenAi)
+api.post('/callbook', bookCtrl.callBook)
 
 
 module.exports = api
