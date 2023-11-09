@@ -8,13 +8,11 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 function callBook (req, res){
-  //comprobar créditos del usuario
-  //return this.http.post('http://localhost:7071/api/HttpTrigger2', info)
-  
   var jsonText = req.body;
   console.log(jsonText)
-  //axios.post('http://localhost:7071/api/HttpTrigger2', jsonText)
-  axios.post('https://af29.azurewebsites.net/api/HttpTrigger2', jsonText)
+  //const functionUrl = `http://127.0.0.1:7071/api/HttpTrigger2?code=${config.functionKey}`;
+  const functionUrl = `https://af29.azurewebsites.net/api/HttpTrigger2?code=${config.functionKey}`;
+  axios.post(functionUrl, jsonText)
   .then(async response => {
       try {
           // const jsonObject = JSON.parse(response.data.table);
