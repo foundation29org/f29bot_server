@@ -9,16 +9,19 @@ const fileUpload = require('express-fileupload');
 const app = express()
 const api = require ('./routes')
 const path = require('path')
-//CORS middleware
+const config= require('./config')
+const allowedOrigins = config.allowedOrigins;
 
 function setCrossDomain(req, res, next) {
-  //instead of * you can define ONLY the sources that we allow.
-  res.header('Access-Control-Allow-Origin', '*');
-  //http methods allowed for CORS.
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Access-Control-Allow-Origin, Accept, Accept-Language, Origin, User-Agent');
-  //res.header('Access-Control-Allow-Headers', '*');
-  next();
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin) || req.method === 'GET')  {
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Access-Control-Allow-Origin, Accept, Accept-Language, Origin, User-Agent, x-api-key');
+    next();
+  }else{
+    res.status(401).json({ error: 'Origin not allowed' });
+  }
 }
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false}))
